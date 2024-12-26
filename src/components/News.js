@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
+import "./News.css"
+import Spinner from "./Spinner";
 
 export default function News() {
-  let flag = false;
   const [state, setState] = useState({
     articles: [], // To store the fetched articles
     loading: true, // To track loading state
@@ -18,6 +19,7 @@ export default function News() {
     // Fetch data from the API
     const fetchData = async () => {
       try {
+        setState({loading:true})
         const response = await fetch(apiUrl);
         const data = await response.json(); // Convert the response to JSON
         setState({
@@ -31,7 +33,6 @@ export default function News() {
         setState({
           articles: [],
           loading: false, // Even if there's an error, set loading to false
-          page: null,
         });
       }
     };
@@ -40,12 +41,10 @@ export default function News() {
   }, []); // Empty dependency array to run only once when the component mounts
 
   const nextClicked = async () => {
-    if (state.page + 1 > Math.ceil(state.totalResults / 16)) {
-      flag = true;
-    } else {
       let apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page + 1
         }&pageSize=16`;
       try {
+        setState({loading:true})
         const response = await fetch(apiUrl);
         const data = await response.json(); // Convert the response to JSON
         setState({
@@ -62,13 +61,13 @@ export default function News() {
           page: null,
         });
       }
-    }
   };
 
   const prevClicked = async () => {
     let apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page - 1
       }&pageSize=16`;
     try {
+      setState({loading:true})
       const response = await fetch(apiUrl);
       const data = await response.json(); // Convert the response to JSON
       setState({
@@ -91,15 +90,11 @@ export default function News() {
     "https://i.insider.com/67604557cf8d1359a2e02724?width=1200&format=jpeg";
   return (
     <div className="container my-2">
-      <h2>Major News Headlines...</h2>
+      {state.loading && <Spinner/>}
+      {!state.loading && <h2>Major News Headlines...</h2>}
       <div className="row">
-        {/* Check if data is still loading */}
-        {state.loading ? (
-          <div>Loading...</div>
-        ) : (
-          // Map through the fetched articles and display them
-          state.articles.map((article) => (
-            <div className="col-md-3 my-4" key={article.url}>
+            {!state.loading && state.articles.map((article) => (
+            <div className="col-md-3 my-4" key={article.id}>
               <NewsItem
                 title={article.title ? article.title.slice(0, 50) : ""}
                 description={
@@ -112,21 +107,21 @@ export default function News() {
               />
             </div>
           ))
-        )}
+        }
       </div>
-      <div className="container d-flex justify-content-between">
+      {!state.loading && <div className="container d-flex justify-content-between">
         <button
           disabled={state.page <= 1}
           type="button"
-          class="btn btn-primary"
+          className={`btn hoverColor ${state.page <= 1?'btn-secondary' : 'btn-primary'}`}
           onClick={prevClicked}
         >
           &larr; Previous
         </button>
-        <button type="button" class="btn btn-primary" onClick={nextClicked}>
+        <button type="button" className={`btn hoverColor ${state.page + 1 > Math.ceil(state.totalResults / 16) ? 'btn-secondary' : 'btn-primary'}`} disabled={state.page + 1 > Math.ceil(state.totalResults / 16)} onClick={nextClicked}>
           Next &rarr;
         </button>
-      </div>
+      </div>}
     </div>
   );
 }
