@@ -3,7 +3,7 @@ import NewsItem from "./NewsItem";
 import "./News.css"
 import Spinner from "./Spinner";
 
-export default function News() {
+export default function News(props) {
   const [state, setState] = useState({
     articles: [], // To store the fetched articles
     loading: true, // To track loading state
@@ -14,7 +14,7 @@ export default function News() {
   useEffect(() => {
     // Define the API endpoint and API key
     let apiUrl =
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=1&pageSize=16";
+      `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=1&pageSize=16`;
 
     // Fetch data from the API
     const fetchData = async () => {
@@ -38,10 +38,10 @@ export default function News() {
     };
 
     fetchData(); // Call the function to fetch data
-  }, []); // Empty dependency array to run only once when the component mounts
+  }, [props.country,props.category]); // Empty dependency array to run only once when the component mounts
 
   const nextClicked = async () => {
-      let apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page + 1
+      let apiUrl = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page + 1
         }&pageSize=16`;
       try {
         setState({loading:true})
@@ -64,7 +64,7 @@ export default function News() {
   };
 
   const prevClicked = async () => {
-    let apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page - 1
+    let apiUrl = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page - 1
       }&pageSize=16`;
     try {
       setState({loading:true})
@@ -91,10 +91,10 @@ export default function News() {
   return (
     <div className="container my-2">
       {state.loading && <Spinner/>}
-      {!state.loading && <h2>Major News Headlines...</h2>}
+      {!state.loading && <h2 className="text-center">Major News Headlines...</h2>}
       <div className="row">
             {!state.loading && state.articles.map((article) => (
-            <div className="col-md-3 my-4" key={article.id}>
+            <div className="col-md-3 my-4 d-flex align-items-center justify-content-center" key={article.id}>
               <NewsItem
                 title={article.title ? article.title.slice(0, 50) : ""}
                 description={

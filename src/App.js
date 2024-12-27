@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <News/>
+      <News country = "us" category = "science"/>
     </div>
   );
 }
