@@ -112,7 +112,7 @@ export default function News(props) {
                 newsUrl={article.url}
                 author = {article.author?article.author:"Anonymous"}
                 publishedAt = {new Date(article.publishedAt).toGMTString()}
-                tag={article.source.name? article.source.name.split(' ').slice(0, 2).join(' ') : ''}
+                tag={article.source.name}
               />
             </div>
           ))
