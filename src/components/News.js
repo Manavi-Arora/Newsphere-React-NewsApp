@@ -11,6 +11,7 @@ export default function News(props) {
   });
 
   // Fetch data from News API when the component mounts
+  const { country, category, setProgress } = props;
   useEffect(() => {
     // Define the API endpoint and API key
     let apiUrl =
@@ -21,24 +22,29 @@ export default function News(props) {
       try {
         setState({loading:true})
         const response = await fetch(apiUrl);
+        props.setProgress(40)
         const data = await response.json(); // Convert the response to JSON
+        props.setProgress(70)
         setState({
           articles: data.articles, // Store the articles in the state
           loading: false, // Data is now loaded, set loading to false
           page: 1,
           totalResults: data.totalResults,
         });
+        props.setProgress(100)
+        document.title = `Newsphere-${props.category.charAt(0).toUpperCase() + props.category.slice(1)}`
       } catch (error) {
         console.error("Error fetching data:", error);
         setState({
           articles: [],
           loading: false, // Even if there's an error, set loading to false
         });
+        
       }
     };
 
     fetchData(); // Call the function to fetch data
-  }, [props.country,props.category]); // Empty dependency array to run only once when the component mounts
+  }, [country, category, setProgress]); // Empty dependency array to run only once when the component mounts
 
   const nextClicked = async () => {
       let apiUrl = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=3dc6ffe0c2344550bc5ee72fd1757dd7&page=${state.page + 1
@@ -91,19 +97,22 @@ export default function News(props) {
   return (
     <div className="container my-2">
       {state.loading && <Spinner/>}
-      {!state.loading && <h2 className="text-center">Major News Headlines...</h2>}
+      {!state.loading && <h2 className="text-center">{`Top ${props.category.charAt(0).toUpperCase() + props.category.slice(1)} Headlines...`}</h2>}
       <div className="row">
             {!state.loading && state.articles.map((article) => (
-            <div className="col-md-3 my-4 d-flex align-items-center justify-content-center" key={article.id}>
+            <div className="col-md-3 my-4 d-flex align-items-center justify-content-center" key={article.url || article.title || article.id || Math.random()}>
               <NewsItem
-                title={article.title ? article.title.slice(0, 50) : ""}
+                title={article.title ? article.title.slice(0, 45) : ""}
                 description={
-                  article.description ? article.description.slice(0, 80) : ""
+                  article.description ? article.description.slice(0, 70) : ""
                 }
                 imageUrl={
                   article.urlToImage ? article.urlToImage : defaultimage
                 }
                 newsUrl={article.url}
+                author = {article.author?article.author:"Anonymous"}
+                publishedAt = {new Date(article.publishedAt).toGMTString()}
+                tag={article.source.name? article.source.name.split(' ').slice(0, 2).join(' ') : ''}
               />
             </div>
           ))

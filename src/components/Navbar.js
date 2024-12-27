@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -11,9 +12,9 @@ export default function Navbar() {
           <a className="navbar-brand" href="/">
             <img src="/favicon.ico" alt="Logo" width="35" height="35" />
           </a>
-          <a className="navbar-brand text-light" href="/">
+          <Link className="navbar-brand text-light" href="/">
             Newsphere
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -28,53 +29,44 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a
+                <Link
                   className="nav-link active text-light"
                   aria-current="page"
-                  href="/"
+                  to="/"
                 >
                   Home
-                </a>
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link text-light" to="/business">
+                  Business
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  About
-                </a>
+                <Link className="nav-link text-light" to="/entertainment">
+                  Entertainment
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  business
-                </a>
+                <Link className="nav-link text-light" to="/health">
+                  Health
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  entertainment
-                </a>
+                <Link className="nav-link text-light" to="/science">
+                  Science
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  general
-                </a>
+                <Link className="nav-link text-light" to="/sports">
+                  Sports
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  health
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  science
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  sports
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-light" href="/">
-                  technology
-                </a>
+                <Link className="nav-link text-light" to="/technology">
+                  Technology
+                </Link>
               </li>
             </ul>
           </div>

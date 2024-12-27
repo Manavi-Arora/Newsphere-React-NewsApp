@@ -3,7 +3,7 @@
     background-color: #282828;
 }
 .card {
-    height: 25rem;
+    height: 30rem;
     width: 16rem;
     background-color: #171717;
     display: flex;
@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .btn-success:hover{
     background-color: #6bbc6b;
 }
