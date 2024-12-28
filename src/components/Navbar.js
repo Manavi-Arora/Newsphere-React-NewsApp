@@ -19,9 +19,9 @@ export default function Navbar() {
       >
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            <img src="/favicon.ico" alt="Logo" width="35" height="35" />
+            <img style = {{cursor : "not-allowed"}} src="/favicon.ico" alt="Logo" width="35" height="35" />
           </a>
-          <Link className="navbar-brand text-light" href="/">
+          <Link className="navbar-brand text-light" style = {{cursor : "not-allowed"}}href="/">
             Newsphere
           </Link>
           <button
