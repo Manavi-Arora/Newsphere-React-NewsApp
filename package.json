@@ -1,7 +1,9 @@
 {
   "name": "news-app",
   "version": "0.1.0",
+  "description": "A news app",
   "private": true,
+  "type": "module",
   "dependencies": {
     "cra-template": "1.2.0",
     "react": "^19.0.0",

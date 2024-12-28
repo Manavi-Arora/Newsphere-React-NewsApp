@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import NewsItem from "./NewsItem";
+import NewsItem from "./NewsItem.js";
 import "./News.css"
-import Spinner from "./Spinner";
+import Spinner from "./Spinner.js";
 
 export default function News(props) {
   const [state, setState] = useState({
@@ -71,6 +71,7 @@ export default function News(props) {
     };
 
     fetchData(); // Call the function to fetch data
+    // eslint-disable-next-line
   }, [country, category, setProgress]); // Empty dependency array to run only once when the component mounts
 
   const nextClicked = async () => {
