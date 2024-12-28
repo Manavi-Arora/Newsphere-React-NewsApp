@@ -4,7 +4,7 @@
 }
 .card {
     height: 30rem;
-    width: 16rem;
+    /* width: 16rem; */
     background-color: #171717;
     display: flex;
     flex-direction: column;

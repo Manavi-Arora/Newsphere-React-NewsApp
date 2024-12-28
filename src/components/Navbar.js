@@ -1,11 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const location = useLocation(); // Get the current location
+
+  // Helper function to check if the current path matches the category
+  const isActive = (category) => {
+    if(category === "/general"){
+      return location.pathname === "/" ? "nav-link text-danger" : "nav-link text-light";
+    }
+    return location.pathname === category ? "nav-link text-danger" : "nav-link text-light";
+  };
   return (
     <div>
       <nav
-        className="navbar navbar-expand-lg"
+        className="navbar navbar-expand-lg fixed-top"
         style={{ backgroundColor: "rgba(13, 13, 13, 0.9)" }}
       >
         <div className="container-fluid">
@@ -30,7 +39,7 @@ export default function Navbar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link active text-light"
+                  className={isActive("/general")}
                   aria-current="page"
                   to="/"
                 >
@@ -39,32 +48,32 @@ export default function Navbar() {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/business">
+                <Link className={isActive("/business")} to="/business">
                   Business
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/entertainment">
+                <Link className={isActive("/entertainment")} to="/entertainment">
                   Entertainment
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/health">
+                <Link className={isActive("/health")} to="/health">
                   Health
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/science">
+                <Link className={isActive("/science")} to="/science">
                   Science
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/sports">
+                <Link className={isActive("/sports")} to="/sports">
                   Sports
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/technology">
+                <Link className={isActive("/technology")} to="/technology">
                   Technology
                 </Link>
               </li>
